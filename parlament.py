@@ -14,9 +14,9 @@ def menu(message):
     global status
     status = 0
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton("Anonīma sūdzība")
-    item2 = types.KeyboardButton("Noteikumi")
-    item3 = types.KeyboardButton("Idejas")
+    item1 = types.KeyboardButton("Anonīma sūdzība✉️")
+    item2 = types.KeyboardButton("Noteikumi📋")
+    item3 = types.KeyboardButton("Idejas💡")
     markup.add(item1, item2, item3)
     bot.send_message(
         message.chat.id, "Izvēlieties vienu no manām komandām🤖", reply_markup=markup, parse_mode='html')
@@ -45,7 +45,7 @@ def start_reply(message):
 @bot.message_handler(content_types="text")
 def message_reply(message):
     global status
-    if message.text == "Anonīma sūdzība":
+    if message.text == "Anonīma sūdzība✉️":
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         item1 = types.KeyboardButton("Atpakaļ")
         markup.add(item1)
@@ -54,7 +54,7 @@ def message_reply(message):
         status = 1
     elif message.text == "Atpakaļ":
         menu(message)
-    elif message.text == "Idejas":
+    elif message.text == "Idejas💡":
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         item1 = types.KeyboardButton("Atpakaļ")
         markup.add(item1)
@@ -75,12 +75,12 @@ def message_reply(message):
             bot.send_message(
                 message.chat.id, "Man tas nepatīk!")
             menu(message)
-    elif message.text == "Instrukcija":
+    elif message.text == "Noteikumi📋":
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         item1 = types.KeyboardButton("Atpakaļ")
         markup.add(item1)
         bot.send_message(
-            message.chat.id, "1. Nelieto lamuvārdus\n2. Neapvainojo skolēnus/skolotājus", reply_markup=markup)
+            message.chat.id, "1. Nelieto lamuvārdus", reply_markup=markup)
         status = 0
     else:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
