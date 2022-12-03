@@ -1,5 +1,10 @@
 import telebot
 from telebot import types
+import psycopg2
+
+DB_URI = "postgres://rgmhudfi:AHIDueNpLi0hReCpkMDGuR474FZzQ3ac@mouse.db.elephantsql.com/rgmhudfi"
+db_connection = psycopg2.connect(DB_URI, sslmode="require")
+db_object = db_connection.cursor()
 
 bot = telebot.TeleBot('5827972760:AAEKsxFXWT_vgGHaN7hNAlq4jJK3rcvStsA')
 admin_chat_id = 843373640
@@ -21,6 +26,13 @@ def menu(message):
 def start_reply(message):
     global status
     status = 0
+    user_id = message.from_user.id
+    username = message.from_user.first_name
+    db_object.execute(f"SELECT id FROM users WHERE id = {user_id}")
+    result = db_object.fetchone()
+    if not result:
+     db_object.execute("INSERT INTO users(id, name) VALUES(%s,%s)", (user_id, username))
+     db_connection.commit()
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton("Anonīma sūdzība✉️")
     item2 = types.KeyboardButton("Idejas💡")
